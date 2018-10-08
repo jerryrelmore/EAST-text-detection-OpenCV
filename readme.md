@@ -1,0 +1,3 @@
+这里的EAST便是旷视在CVPR2017的一篇文章：EAST: An Efficient and Accurate Scene Text Detector的实现，
+
+不过用训练好的模型文件frozen_east_text_detection.pb进行文本检测的结果还是不够好，总有一些文字未能检测出来

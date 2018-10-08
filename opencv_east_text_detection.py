@@ -1,10 +1,16 @@
+
+# ————————————————————————————————
+# 对银行卡号码的定位效果非常差！！！  对身份证文字的定位也不怎么好
+# ————————————————————————————————
+
 import numpy as np
 import cv2
-from imutils.object_detection import non_max_suppression
+from imutils.object_detection import non_max_suppression    # pip install imutils
 
 image1 = cv2.imread("images\\1.bmp")     # image1是源图像
 (height1, width1) = image1.shape[:2]
-(height2, width2) = (320, 320)  # 模型输入图像的宽度和高度必须是32的倍数
+size = 320
+(height2, width2) = (size, size)  # 模型输入图像的宽度和高度必须是32的倍数，否则会报错
 image2 = cv2.resize(image1, (width2, height2))  # image2是现在的图像
 
 net = cv2.dnn.readNet("frozen_east_text_detection.pb")
@@ -26,7 +32,7 @@ for y in range(rows):
 
     for x in range(cols):
 
-        if scoresdata[x] < 0.001:  # if score is less than min_confidence, ignore
+        if scoresdata[x] < 0.5:  # if score is less than min_confidence, ignore
             continue
         # print(scoresdata[x])
         offsetx = x * 4.0
@@ -52,7 +58,7 @@ for y in range(rows):
 
 # applying non-maxima suppression to supppress weak and overlapping bounding boxes
 boxes = non_max_suppression(np.array(rects), probs=confidences)
-5
+
 rW = width1 / float(width2)
 rH = height1 / float(height2)
 for (startx, starty, endx, endy) in boxes:
